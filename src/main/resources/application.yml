@@ -1,0 +1,69 @@
+management:
+  security:  
+   enabled: false 
+  metrics:
+    tags.application:  ${spring.application.name}  
+    distribution: 
+      percentiles-histogram.http.server.requests: true
+      percentiles-histogram.resilience4j.circuitbreaker.calls: true
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+      diskspace.enabled: false
+      circuitbreakers.enabled: true
+      ratelimiters.enabled: true
+  endpoints:
+    jmx:
+      exposure:
+       include: '*'
+    web:
+     exposure:
+      include: '*'
+      base-path: /actuator
+    cors:
+      allowed-origins: 'true'
+      enabled-by-default: 'false'
+
+spring:
+    application.name: client
+    jackson.serialization.indent_output: true
+
+server:
+    port: 9080
+
+
+info:
+    name: ${spring.application.name}
+    description: client
+    environment: default
+    version: 0.0.1
+
+
+#resilience4j:
+#  circuitbreaker:
+#    instances:
+#      eventHandler:
+#        failureRateThreshold: 50
+#        minimumNumberOfCalls: 5
+#        waitDurationInOpenState: 10s
+#        slowCallDurationThreshold: 5s
+#
+#    ratelimiter:
+#     instances:
+#      eventHandler:
+#        registerHealthIndicator: true
+#        timeoutDuration: 3s
+#
+#    thread-pool-bulkhead:
+#     instances:
+#      eventHandlerBulkhead:
+#        maxThreadPoolSize: 1
+#        coreThreadPoolSize: 1
+#        queueCapacity: 1
+#
+#    bulkhead:
+#     instances:
+#      eventHandler:
+#        maxConcurrentCalls: 4
+
